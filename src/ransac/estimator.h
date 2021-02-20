@@ -129,7 +129,7 @@ class Estimator {
                                         const Model& model) const {
     std::vector<double> residuals(data.size());
 #pragma omp parallel for
-    for (uint i = 0; i < data.size(); i++) {
+    for (/*unsigned*/ int i = 0; i < data.size(); i++) {
       residuals[i] = Error(data[i], model);
     }
     return residuals;

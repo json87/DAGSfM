@@ -32,3 +32,5 @@
 set(FOLDER_NAME "tools")
 
 # COLMAP_ADD_EXECUTABLE(example example.cc)
+
+COLMAP_ADD_EXECUTABLE(scene_division scene_division.cc)

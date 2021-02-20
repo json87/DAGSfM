@@ -37,8 +37,8 @@
 
 #include <glog/logging.h>
 
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/SparseCore>
+#include <Eigen/Core>
+#include <Eigen/SparseCore>
 #include <iostream>
 #include <unordered_map>
 

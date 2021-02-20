@@ -31,6 +31,10 @@
 
 set(FOLDER_NAME "retrieval")
 
+if(IS_MSVC)
+    add_compile_options("/bigobj")
+endif()
+
 COLMAP_ADD_SOURCES(
     geometry.h geometry.cc
     inverted_file.h

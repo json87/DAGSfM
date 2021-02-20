@@ -52,6 +52,7 @@ add_subdirectory(retrieval)
 add_subdirectory(rotation_estimation)
 add_subdirectory(sfm)
 add_subdirectory(solver)
+add_subdirectory(tools)
 add_subdirectory(ui)
 add_subdirectory(util)
 

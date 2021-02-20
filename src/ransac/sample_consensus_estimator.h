@@ -312,7 +312,7 @@ bool SampleConsensusEstimator<ModelEstimator>::Estimate(
     }
     // Get the corresponding data elements for the subset.
     std::vector<Datum> data_subset(data_subset_indices.size());
-    for (uint i = 0; i < data_subset_indices.size(); i++) {
+    for (unsigned int i = 0; i < data_subset_indices.size(); i++) {
       data_subset[i] = data[data_subset_indices[i]];
     }
 

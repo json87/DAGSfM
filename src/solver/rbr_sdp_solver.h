@@ -36,7 +36,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "eigen3/Eigen/Core"
+#include "Eigen/Core"
 #include "solver/bcm_sdp_solver.h"
 #include "solver/sdp_solver.h"
 

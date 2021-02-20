@@ -29,22 +29,71 @@
 //
 // Author: Johannes L. Schoenberger (jsch-at-demuc-dot-de)
 
-#ifndef COLMAP_SRC_UTIL_VERSION_H_
-#define COLMAP_SRC_UTIL_VERSION_H_
+#include "base/database.h"
+#include "util/logging.h"
+#include "util/math.h"
+#include "util/misc.h"
+#include "util/option_manager.h"
+#include "clustering/ncut_cluster.h"
 
-#include "misc.h"
+#include <fstream>
 
-namespace colmap {
+using namespace colmap;
+using namespace DAGSfM;
 
-const static std::string COLMAP_VERSION = "3.6";
-const static int COLMAP_VERSION_NUMBER = 3600;
-const static std::string COLMAP_COMMIT_ID = "c356b82";
-const static std::string COLMAP_COMMIT_DATE = "2021-01-22";
+// Simple example that reads and writes a reconstruction.
+int main(int argc, char** argv) {
+	InitializeGlog(argv);
 
-std::string GetVersionInfo();
+	std::string input_path;
+	int num_partitions = 5;
+	std::string output_path;
 
-std::string GetBuildInfo();
+	OptionManager options;
+	options.AddDatabaseOptions();
+	options.AddRequiredOption("input_path", &input_path);
+	options.AddDefaultOption("num_partitions", &num_partitions);
+	options.AddRequiredOption("output_path", &output_path);
+	options.Parse(argc, argv);
 
-}  // namespace colmap
+	// Read image pairs and calculate weights.
+	std::vector<std::pair<int, int>> view_pairs;
+	std::vector<int> weights;
 
-#endif  // COLMAP_SRC_UTIL_VERSION_H_
+	std::ifstream file_input(input_path);
+	CHECK(file_input.is_open()) << input_path;
+
+	std::string line, item;
+
+	while (std::getline(file_input, line)) {
+		StringTrim(&line);
+
+		if (line.empty() || line[0] == '#') {
+			continue;
+		}
+
+		std::stringstream line_stream(line);
+
+		std::getline(line_stream, item, ' ');
+		int id1 = std::stoi(item);
+		std::getline(line_stream, item, ' ');
+		int id2 = std::stoi(item);
+		view_pairs.push_back(std::pair<int, int>(id1, id2));
+
+		std::getline(line_stream, item, ' ');
+		weights.push_back(100*std::stod(item));
+	}
+
+	CHECK_EQ(view_pairs.size(), weights.size());
+
+	// Scene cluster based on NormalizedCut.
+	NCutCluster cluster;
+	cluster.InitIGraph(view_pairs, weights);
+	cluster.ComputeCluster(view_pairs, weights, num_partitions);
+
+	// Prepare clustered scenes.
+	CreateDirIfNotExists(output_path);
+	cluster.OutputIGraph(output_path);
+
+	return EXIT_SUCCESS;
+}

@@ -33,8 +33,8 @@
 #ifndef MATH_MATRIX_SQUARE_ROOT_H
 #define MATH_MATRIX_SQUARE_ROOT_H
 
-#include "eigen3/Eigen/Core"
-#include "eigen3/Eigen/Eigenvalues"
+#include "Eigen/Core"
+#include "Eigen/Eigenvalues"
 #include "glog/logging.h"
 
 namespace DAGSfM {

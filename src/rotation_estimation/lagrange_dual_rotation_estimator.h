@@ -38,9 +38,9 @@
 #include <glog/logging.h>
 
 #include <chrono>
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/SparseCore>
+#include <Eigen/Core>
+#include <Eigen/Dense>
+#include <Eigen/SparseCore>
 #include <iostream>
 #include <memory>
 #include <unordered_map>

@@ -312,11 +312,11 @@ bool DistributedMapperController::DistributedSfM() {
   //// 3. Merge clusters ///////////////////////////
   //////////////////////////////////////////////////
   std::vector<Reconstruction*> reconstructions;
-  for (uint i = 0; i < sfm_data_container.reconstructions.size(); i++) {
+  for (unsigned int i = 0; i < sfm_data_container.reconstructions.size(); i++) {
     reconstructions.push_back(&sfm_data_container.reconstructions[i]);
   }
 
-  for (uint i = 0; i < reconstructions.size(); i++) {
+  for (unsigned int i = 0; i < reconstructions.size(); i++) {
     reconstructions[i]->ShowReconInfo();
   }
   // Determine the number of workers and threads per worker
@@ -370,7 +370,7 @@ bool DistributedMapperController::DistributedFeatureExtractionAndMatching() {
   // Clustering images
   ImageCluster image_cluster;
   image_cluster.image_ids = similarity_graph_.ImageIds();
-  for (uint i = 0; i < all_image_pairs.size(); i++) {
+  for (unsigned int i = 0; i < all_image_pairs.size(); i++) {
     const ImagePair image_pair = all_image_pairs[i];
     image_cluster.edges[image_pair] = num_inliers[i];
   }
@@ -583,7 +583,7 @@ bool DistributedMapperController::LoadTwoviewGeometries() {
 
   LOG(INFO) << "Estimating two view geometries";
   // #pragma omp parallel for
-  for (uint i = 0; i < image_pairs.size(); i++) {
+  for (unsigned int i = 0; i < image_pairs.size(); i++) {
     const image_t image_id1 = image_pairs[i].first,
                   image_id2 = image_pairs[i].second;
     const ImagePair view_id_pair = ImagePair(image_id1, image_id2);
@@ -676,7 +676,7 @@ void DistributedMapperController::ReconstructPartitions(
   }
 
 #pragma omp parallel for
-  for (size_t k = 0; k < inter_clusters_.size(); k++) {
+  for (/*size_t*/int k = 0; k < inter_clusters_.size(); k++) {
     const auto& cluster = inter_clusters_[k];
 
     IncrementalMapperOptions custom_options = mapper_options_;
@@ -740,7 +740,7 @@ void DistributedMapperController::MergeClusters(
     CHECK_EQ(IsPartialReconsExist(trans_recons), true);
 
     std::vector<Sim3> sim3_to_anchor = sfm_aligner.GetSim3ToAnchor();
-    for (uint i = 0; i < reconstructions.size(); i++) {
+    for (unsigned int i = 0; i < reconstructions.size(); i++) {
       if (static_cast<int>(i) == anchor_node.id) continue;
 
       Sim3 sim3 = sim3_to_anchor[i];

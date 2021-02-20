@@ -41,8 +41,8 @@
 #include <limits>
 
 #include "bcm_sdp_solver.h"
-#include "eigen3/Eigen/Eigenvalues"
-#include "eigen3/Eigen/QR"
+#include "Eigen/Eigenvalues"
+#include "Eigen/QR"
 #include "math/matrix_square_root.h"
 
 namespace DAGSfM {

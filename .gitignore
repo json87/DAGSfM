@@ -1,4 +1,6 @@
 paper
 build
+build17_x64
+dagsfm17_x64
 .vscode/
 lib/mirror/data/model/model.*

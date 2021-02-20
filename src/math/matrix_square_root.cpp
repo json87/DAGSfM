@@ -32,7 +32,7 @@
 
 #include "math/matrix_square_root.h"
 
-#include "eigen3/Eigen/Cholesky"
+#include "Eigen/Cholesky"
 
 namespace DAGSfM {
 Eigen::MatrixXd MatrixSquareRoot(const Eigen::MatrixXd& mat) {

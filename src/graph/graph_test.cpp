@@ -228,7 +228,7 @@ TEST(GRAPH_TEST, TEST_SERIALIZENODES) {
   }
 
   std::vector<Node> sequential_nodes = graph.SerializeNodes();
-  for (uint i = 0; i < sequential_nodes.size(); i++) {
+  for (unsigned int i = 0; i < sequential_nodes.size(); i++) {
     EXPECT_EQ(sequential_nodes[i].id, i);
   }
 }

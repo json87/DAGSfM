@@ -143,7 +143,7 @@ void AlignOrientations(
 
   AlignRotations(gt_rot, &rot);
 
-  for (uint i = 0; i < rot.size(); i++) {
+  for (unsigned int i = 0; i < rot.size(); i++) {
     const image_t view_id = FindOrDie(index_to_view_id, i);
     (*rotations)[view_id] = rot[i];
   }
@@ -201,7 +201,7 @@ class EstimateRotationsRobustTest : public ::testing::Test {
 
   void GetRelativeRotations(const int num_view_pairs, const double pose_noise) {
     // Create a set of view id pairs that will contain a spanning tree.
-    for (uint i = 1; i < orientations_.size(); i++) {
+    for (unsigned int i = 1; i < orientations_.size(); i++) {
       const ImagePair view_id_pair(i - 1, i);
       view_pairs_[view_id_pair].rotation_2 = RelativeRotationFromTwoRotations(
           FindOrDie(orientations_, view_id_pair.first),
@@ -209,7 +209,7 @@ class EstimateRotationsRobustTest : public ::testing::Test {
     }
 
     // Add random edges.
-    while (view_pairs_.size() < static_cast<uint>(num_view_pairs)) {
+    while (view_pairs_.size() < static_cast<unsigned int>(num_view_pairs)) {
       ImagePair view_id_pair(rng.RandInt(0, orientations_.size() - 1),
                              rng.RandInt(0, orientations_.size() - 1));
       // Ensure the first id is smaller than the second id.
@@ -234,7 +234,7 @@ class EstimateRotationsRobustTest : public ::testing::Test {
       std::unordered_map<image_t, Vector3d>* initial_orientations) {
     // Set the first view to be at the origin.
     (*initial_orientations)[0] = Vector3d::Zero();
-    for (uint i = 1; i < orientations_.size(); i++) {
+    for (unsigned int i = 1; i < orientations_.size(); i++) {
       (*initial_orientations)[i] = ApplyRelativeRotation(
           FindOrDie(*initial_orientations, i - 1),
           FindOrDieNoPrint(view_pairs_, ImagePair(i - 1, i)).rotation_2);

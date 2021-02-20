@@ -104,7 +104,7 @@ struct MatchesDataContainer : public TaskDataContainer {
     CHECK_GT(database_infos.size(), 0);
     database_infos[0].UpdateImageIndex(image_name_to_id);
 
-    for (uint i = 1; i < database_infos.size(); i++) {
+    for (unsigned int i = 1; i < database_infos.size(); i++) {
       database_infos[i].UpdateImageIndex(image_name_to_id);
       database_infos[0].Merge(database_infos[i]);
     }

@@ -57,7 +57,7 @@ std::unordered_map<int, int> HybridCluster::ComputeCluster(
   igraph_community_fastgreedy(&igraph_, &i_weights_, &merges, &modularity,
                               &membership);
 
-  for (uint i = 0; i < igraph_vector_size(&membership); i++) {
+  for (unsigned int i = 0; i < igraph_vector_size(&membership); i++) {
     labels[nodes_[i]] = (int)VECTOR(membership)[i];
   }
 
@@ -96,7 +96,7 @@ std::unordered_map<int, int> HybridCluster::ComputeCluster(
   std::unordered_map<int, int> labels_;
   const int num_images_ub = labels.size() / num_partitions;
   int max_label = 0;
-  for (uint k = 0; k < edges_groups.size(); k++) {
+  for (unsigned int k = 0; k < edges_groups.size(); k++) {
     const int local_cluster_num = nodes_groups[k].size() / num_images_ub;
     if (local_cluster_num == 0) continue;
 

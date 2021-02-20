@@ -74,10 +74,10 @@ class ImageClustering {
  public:
   struct Options {
     // The upper bound of images number
-    uint num_images_ub = 100;
+    unsigned int num_images_ub = 100;
 
     // The number of overlapping images between child clusters.
-    uint image_overlap = 50;
+    unsigned int image_overlap = 50;
 
     // completeness ratio for selecting expanded clusters
     float completeness_ratio = 0.5;
@@ -88,7 +88,7 @@ class ImageClustering {
     int branching_factor = 2;
 
     // Maximum number of edges for building connections between clusters
-    uint max_num_cluster_pairs = 0;
+    unsigned int max_num_cluster_pairs = 0;
 
     bool is_output_igraph = true;
 
@@ -101,10 +101,10 @@ class ImageClustering {
 
   struct Summary {
     // The number of grpah cut
-    uint total_cutting_num = 0;
+    unsigned int total_cutting_num = 0;
 
     // The number of graph expansion
-    uint total_expansion_num = 0;
+    unsigned int total_expansion_num = 0;
 
     // Total time took for graph cut
     double total_cutting_time = 0;
@@ -116,19 +116,19 @@ class ImageClustering {
     double total_time = 0;
 
     // Original number of images
-    uint original_images_num = 0;
+    unsigned int original_images_num = 0;
 
     // Total number of images after images clustering
-    uint clustered_images_num = 0;
+    unsigned int clustered_images_num = 0;
 
     // Original number of images' edges
-    uint original_edges_num = 0;
+    unsigned int original_edges_num = 0;
 
     // Total number of edges after images clustering
-    uint clustered_edges_num = 0;
+    unsigned int clustered_edges_num = 0;
 
     // Total iteration number
-    uint total_iters_num = 0;
+    unsigned int total_iters_num = 0;
   };
 
   ImageClustering(const Options& options, const ImageCluster& root_cluster);
@@ -180,7 +180,7 @@ class ImageClustering {
   bool IsSatisfyCompletenessRatio(const ImageCluster& cluster);
   int ClusterSatisfyCompletenessRatio(const graph::Edge& edge);
 
-  uint CommonImagesNum(const ImageCluster& cluster1,
+  unsigned int CommonImagesNum(const ImageCluster& cluster1,
                        const ImageCluster& cluster2) const;
 
   bool IsRemainingClusters() const;

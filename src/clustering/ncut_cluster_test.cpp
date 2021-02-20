@@ -83,7 +83,7 @@ class ImageClusteringTest : public ::testing::Test {
     }
 
     // Add random edges
-    while (view_pairs_.size() < (uint)num_view_pairs) {
+    while (view_pairs_.size() < (unsigned int)num_view_pairs) {
       const ImagePair view_id_pair(rng.RandInt(0, image_ids_.size() - 1),
                                    rng.RandInt(0, image_ids_.size() - 1));
 

@@ -57,7 +57,7 @@ std::unordered_map<int, int> CommunityDetectionCluster::ComputeCluster(
                               &membership);
 
   // std::unordered_map<int, int> labels;
-  for (uint i = 0; i < igraph_vector_size(&membership); i++) {
+  for (unsigned int i = 0; i < igraph_vector_size(&membership); i++) {
     labels_[nodes_[i]] = (int)VECTOR(membership)[i];
     cluster_num_ = std::max(cluster_num_, labels_[nodes_[i]] + 1);
   }

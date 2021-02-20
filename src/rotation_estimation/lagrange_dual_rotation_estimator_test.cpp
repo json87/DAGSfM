@@ -35,8 +35,8 @@
 #include <ceres/rotation.h>
 
 #include <cstring>
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Core>
+#include <Eigen/Dense>
 #include <fstream>
 #include <string>
 #include <unordered_map>

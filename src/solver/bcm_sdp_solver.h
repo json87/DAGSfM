@@ -37,7 +37,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include "eigen3/Eigen/Core"
+#include "Eigen/Core"
 #include "solver/sdp_solver.h"
 
 namespace DAGSfM {

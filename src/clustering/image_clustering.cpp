@@ -67,7 +67,7 @@ ImageClustering::ImageClustering(const Options& options,
 
 void ImageClustering::Cut() {
   timer_.Start();
-  const uint num_clusters =
+  const unsigned int num_clusters =
       root_cluster_.image_ids.size() / options_.num_images_ub;
   CHECK_GE(num_clusters, 1);
 
@@ -101,7 +101,7 @@ void ImageClustering::Cut() {
   for (const auto label : labels) {
     intra_clusters_[label.second].image_ids.push_back(label.first);
   }
-  for (uint i = 0; i < intra_clusters_.size(); i++) {
+  for (unsigned int i = 0; i < intra_clusters_.size(); i++) {
     intra_clusters_[i].cluster_id = i;
   }
 
@@ -132,7 +132,7 @@ void ImageClustering::Cut() {
 void ImageClustering::Expand() {
   LOG(INFO) << "Expanding Images...";
 
-  const uint num_clusters = intra_clusters_.size();
+  const unsigned int num_clusters = intra_clusters_.size();
   inter_clusters_.reserve(num_clusters);
   for (auto cluster : intra_clusters_) {
     inter_clusters_.emplace_back(cluster);
@@ -160,7 +160,7 @@ void ImageClustering::Expand() {
 void ImageClustering::ExpandAllEdges() {
   LOG(INFO) << "Expanding All Lost Edges...";
 
-  const uint num_clusters = intra_clusters_.size();
+  const unsigned int num_clusters = intra_clusters_.size();
   inter_clusters_.reserve(num_clusters);
   for (auto cluster : intra_clusters_) {
     inter_clusters_.emplace_back(cluster);
@@ -347,7 +347,7 @@ double ImageClustering::AnalyzeDegree(
     const std::vector<int>& weights) const {
   using namespace DAGSfM::graph;
   Graph<Node, Edge> graph;
-  for (uint i = 0; i < image_pairs.size(); i++) {
+  for (unsigned int i = 0; i < image_pairs.size(); i++) {
     graph.AddEdge(
         Edge(image_pairs[i].first, image_pairs[i].second, weights[i]));
     graph.AddEdge(
@@ -413,14 +413,14 @@ std::unique_ptr<Cluster> ImageClustering::CreateCluster(
 bool ImageClustering::IsSatisfyCompletenessRatio(const ImageCluster& cluster) {
   if (cluster.is_condition_satisfy) return true;
 
-  const uint i = cluster.cluster_id;
+  const unsigned int i = cluster.cluster_id;
   std::unordered_set<image_t> image_sets(cluster.image_ids.begin(),
                                          cluster.image_ids.end());
 
-  uint repeated_node_num = 0;
-  for (uint j = 0; j < inter_clusters_.size(); j++) {
+  unsigned int repeated_node_num = 0;
+  for (unsigned int j = 0; j < inter_clusters_.size(); j++) {
     if (i == j) continue;
-    const uint common_images_num =
+    const unsigned int common_images_num =
         CommonImagesNum(inter_clusters_[i], inter_clusters_[j]);
     repeated_node_num += common_images_num;
   }
@@ -440,7 +440,7 @@ bool ImageClustering::IsSatisfyCompletenessRatio(const ImageCluster& cluster) {
 int ImageClustering::ClusterSatisfyCompletenessRatio(const graph::Edge& edge) {
   int cluster_id = -1;
 
-  for (uint i = 0; i < inter_clusters_.size() - 1; i++) {
+  for (unsigned int i = 0; i < inter_clusters_.size() - 1; i++) {
     std::unordered_set<image_t> image_sets(inter_clusters_[i].image_ids.begin(),
                                            inter_clusters_[i].image_ids.end());
     if (image_sets.find(edge.src) == image_sets.end() &&
@@ -448,10 +448,10 @@ int ImageClustering::ClusterSatisfyCompletenessRatio(const graph::Edge& edge) {
       continue;
     }
 
-    uint repeated_node_num = 0;
-    for (uint j = 0; j < inter_clusters_.size(); j++) {
+    unsigned int repeated_node_num = 0;
+    for (unsigned int j = 0; j < inter_clusters_.size(); j++) {
       if (i == j) continue;
-      const uint common_images_num =
+      const unsigned int common_images_num =
           CommonImagesNum(inter_clusters_[i], inter_clusters_[j]);
       // LOG(INFO) << "common images num: " << common_images_num;
       repeated_node_num += common_images_num;
@@ -474,9 +474,9 @@ int ImageClustering::ClusterSatisfyCompletenessRatio(const graph::Edge& edge) {
   return cluster_id;
 }
 
-uint ImageClustering::CommonImagesNum(const ImageCluster& cluster1,
+unsigned int ImageClustering::CommonImagesNum(const ImageCluster& cluster1,
                                       const ImageCluster& cluster2) const {
-  uint common_images_num = 0;
+  unsigned int common_images_num = 0;
   const std::unordered_set<image_t> images1(cluster1.image_ids.begin(),
                                             cluster1.image_ids.end());
   const std::unordered_set<image_t> images2(cluster2.image_ids.begin(),
@@ -549,7 +549,7 @@ void ImageClustering::AddLostEdgesBetweenClusters(
   std::sort(lost_edges.begin(), lost_edges.end(), cmp);
 
   RandomNumberGenerator rng;
-  for (uint k = 0; /*k < options_.image_overlap &&*/ k < lost_edges.size();
+  for (unsigned int k = 0; /*k < options_.image_overlap &&*/ k < lost_edges.size();
        k++) {
     const ImagePair view_pair =
         lost_edges[k].src < lost_edges[k].dst

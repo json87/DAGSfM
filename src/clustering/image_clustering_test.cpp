@@ -74,7 +74,7 @@ class ImageClusteringTest : public ::testing::Test {
     std::vector<ImageCluster> inter_clusters =
         image_clustering.GetInterClusters();
     LOG(INFO) << inter_clusters.size() << " clusters\n";
-    for (uint i = 0; i < inter_clusters.size(); i++) {
+    for (unsigned int i = 0; i < inter_clusters.size(); i++) {
       const auto& inter_cluster = inter_clusters[i];
       // CHECK_LE(inter_cluster.image_ids.size(), options.relax_ratio *
       // options.num_images_ub);
@@ -96,7 +96,7 @@ class ImageClusteringTest : public ::testing::Test {
     }
 
     // Add random edges
-    while (view_pairs_.size() < (uint)num_view_pairs) {
+    while (view_pairs_.size() < (unsigned int)num_view_pairs) {
       const ImagePair view_id_pair(rng.RandInt(0, image_ids_.size() - 1),
                                    rng.RandInt(0, image_ids_.size() - 1));
 

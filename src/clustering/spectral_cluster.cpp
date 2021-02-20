@@ -66,14 +66,14 @@ std::unordered_map<int, int> SpectralCluster::ComputeCluster(
   cluster_num_ = num_partitions;
 
   // 1. Compute similarity graph.
-  for (uint i = 0; i < nodes_.size(); i++) {
+  for (unsigned int i = 0; i < nodes_.size(); i++) {
     node_mapper_[nodes_[i]] = i;
   }
 
   timer.Start();
   const int N = nodes_.size();
   Eigen::SparseMatrix<double> S(N, N);
-  for (uint i = 0; i < edges.size(); i++) {
+  for (unsigned int i = 0; i < edges.size(); i++) {
     int src = node_mapper_[edges[i].first], dst = node_mapper_[edges[i].second];
     s_triplets.push_back(Eigen::Triplet<double>(src, dst, weights[i]));
     s_triplets.push_back(Eigen::Triplet<double>(dst, src, weights[i]));
@@ -116,7 +116,7 @@ std::unordered_map<int, int> SpectralCluster::ComputeCluster(
 
   // 4. Reverse original eigen vectors(as it stored in descending order)
   timer.Start();
-  uint i = 0, j = k - 1;
+  unsigned int i = 0, j = k - 1;
   while (i < j) {
     const Eigen::VectorXd tmp = eigen_vectors.col(i);
     eigen_vectors.col(i) = eigen_vectors.col(j);
@@ -127,7 +127,7 @@ std::unordered_map<int, int> SpectralCluster::ComputeCluster(
 
   std::vector<Eigen::VectorXd> source_data;
   source_data.reserve(eigen_vectors.rows());
-  for (uint i = 0; i < eigen_vectors.rows(); i++) {
+  for (unsigned int i = 0; i < eigen_vectors.rows(); i++) {
     source_data.push_back(eigen_vectors.row(i));
   }
   timer.Pause();
@@ -141,7 +141,7 @@ std::unordered_map<int, int> SpectralCluster::ComputeCluster(
   timer.Pause();
   LOG(INFO) << "5. KMeans Time: " << timer.ElapsedSeconds();
 
-  for (uint i = 0; i < cluster_assignment.size(); i++) {
+  for (unsigned int i = 0; i < cluster_assignment.size(); i++) {
     labels_[nodes_[i]] = cluster_assignment[i];
   }
   return labels_;

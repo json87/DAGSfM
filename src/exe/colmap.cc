@@ -1060,7 +1060,7 @@ int RunSfMAligner(int argc, char** argv) {
   LOG(INFO) << "Exporting merged map to " << output_path;
   recons[anchor_node.id]->WriteBinary(output_path);
 
-  for (uint i = 0; i < recons.size(); i++) {
+  for (unsigned int i = 0; i < recons.size(); i++) {
     delete recons[i];
   }
 

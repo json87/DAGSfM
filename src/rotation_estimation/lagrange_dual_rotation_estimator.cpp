@@ -97,7 +97,7 @@ bool LagrangeDualRotationEstimator::EstimateRotations(
     vec_ids.push_back(rotation.first);
   }
   std::sort(vec_ids.begin(), vec_ids.end());
-  for (uint i = 0; i < vec_ids.size(); i++) {
+  for (unsigned int i = 0; i < vec_ids.size(); i++) {
     view_id_to_index_[vec_ids[i]] = i;
   }
 

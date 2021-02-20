@@ -85,7 +85,7 @@ class SfMAligner {
 
   void ConstructReconsGraph();
 
-  double ComputeEdgeWeight(const uint i, const uint j);
+  double ComputeEdgeWeight(const unsigned int i, const unsigned int j);
 
   void FindAnchorNode(Graph<Node, Edge>* graph);
 

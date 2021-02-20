@@ -62,7 +62,7 @@ void FindSimilarityTransform(const std::vector<Eigen::Vector3d>& observations1,
     // Re-compute similarity by inliers
     Eigen::MatrixXd x1 = Eigen::MatrixXd::Zero(3, inliers1.size()),
                     x2 = Eigen::MatrixXd::Zero(3, inliers2.size());
-    for (uint i = 0; i < inliers1.size(); i++) {
+    for (unsigned int i = 0; i < inliers1.size(); i++) {
       x1.col(i) = inliers1[i];
       x2.col(i) = inliers2[i];
     }
@@ -80,7 +80,7 @@ void FindSimilarityTransform(const std::vector<Eigen::Vector3d>& observations1,
   if (observations1.size() <= 5 || inliers1.size() <= 5) {
     Eigen::MatrixXd x1 = Eigen::MatrixXd::Zero(3, observations1.size()),
                     x2 = Eigen::MatrixXd::Zero(3, observations2.size());
-    for (uint i = 0; i < observations1.size(); i++) {
+    for (unsigned int i = 0; i < observations1.size(); i++) {
       x1.col(i) = observations1[i];
       x2.col(i) = observations2[i];
     }
@@ -131,7 +131,7 @@ SfMAligner::SfMAligner(const std::vector<Reconstruction*>& reconstructions,
   CHECK_GT(reconstructions.size(), 0);
   CHECK_GT(reconstructions_.size(), 0);
 
-  for (uint i = 0; i < reconstructions_.size(); i++) {
+  for (unsigned int i = 0; i < reconstructions_.size(); i++) {
     LOG(INFO) << "Node id: " << i;
     CHECK_NOTNULL(reconstructions_[i]);
     LOG(INFO) << "Total images number: " << reconstructions_[i]->NumImages();
@@ -246,8 +246,8 @@ void SfMAligner::ConstructReconsGraph() {
   }
 
   // 2. Add edges
-  for (uint i = 0; i < reconstructions_.size(); i++) {
-    for (uint j = i + 1; j < reconstructions_.size(); j++) {
+  for (unsigned int i = 0; i < reconstructions_.size(); i++) {
+    for (unsigned int j = i + 1; j < reconstructions_.size(); j++) {
       const double weight = ComputeEdgeWeight(i, j);
       LOG(INFO) << "weight: " << weight;
       if (weight != std::numeric_limits<double>::max()) {
@@ -257,7 +257,7 @@ void SfMAligner::ConstructReconsGraph() {
   }
 }
 
-double SfMAligner::ComputeEdgeWeight(const uint i, const uint j) {
+double SfMAligner::ComputeEdgeWeight(const unsigned int i, const unsigned int j) {
   const Reconstruction& recon1 = *reconstructions_[i];
   const Reconstruction& recon2 = *reconstructions_[j];
   double weight = std::numeric_limits<double>::max();
@@ -334,7 +334,7 @@ void SfMAligner::FindAnchorNode(Graph<Node, Edge>* graph) {
   // until one node or two nodes left. If two nodes left, we choose the
   // reconstruction that has the largest size as the anchor.
   int layer = 1;
-  uint anchor_index = 0;
+  unsigned int anchor_index = 0;
 
   while (graph->GetNodesNum() > 1) {
     LOG(INFO) << "Merging the " << layer++ << "-th layer leaf nodes";
@@ -365,8 +365,8 @@ void SfMAligner::FindAnchorNode(Graph<Node, Edge>* graph) {
       LOG(INFO) << edge.src << "->" << edge.dst << ": " << edge.weight;
 
       // src is the node with degree = 1
-      uint src = (idx == edge.src) ? edge.src : edge.dst;
-      uint dst = (idx == edge.src) ? edge.dst : edge.src;
+      unsigned int src = (idx == edge.src) ? edge.src : edge.dst;
+      unsigned int dst = (idx == edge.src) ? edge.dst : edge.src;
 
       LOG(INFO) << "Merge Clusters: " << src << "->" << dst << ": "
                 << edge.weight;
@@ -455,21 +455,21 @@ bool ComputeSimilarityByCameraMotions(
   // my hybrid approach by combining "Divide and Conquer: Efficient Large-Scale
   // Structure from Motion Using Graph Partitioning" and RANSAC
 
-  const uint n = camera_centers1.size();
+  const unsigned int n = camera_centers1.size();
   std::vector<Eigen::Vector3d> ts1(n);
   std::vector<Eigen::Vector3d> ts2(n);
 
-  for (uint i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     ts1[i] = -camera_rotations1[i] * camera_centers1[i];
     ts2[i] = -camera_rotations2[i] * camera_centers2[i];
   }
 
   // compute relative scale from a->b
   std::vector<double> scales;
-  for (uint i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     Eigen::Vector3d center_a1 = camera_centers1[i];
     Eigen::Vector3d center_b1 = camera_centers2[i];
-    for (uint j = i + 1; j < n; j++) {
+    for (unsigned int j = i + 1; j < n; j++) {
       Eigen::Vector3d center_a2 = camera_centers1[j];
       Eigen::Vector3d center_b2 = camera_centers2[j];
       double scale_ab =
@@ -486,7 +486,7 @@ bool ComputeSimilarityByCameraMotions(
   // compute relative rotation & relative translation from a->b
   std::vector<Correspondence3D> corres3d;
   std::vector<CorrespondenceEuc> input_datas;
-  for (uint i = 0; i < camera_centers1.size(); i++) {
+  for (unsigned int i = 0; i < camera_centers1.size(); i++) {
     corres3d.emplace_back(camera_centers1[i], camera_centers2[i]);
     input_datas.push_back(make_pair(Euclidean3D(camera_rotations1[i], ts1[i]),
                                     Euclidean3D(camera_rotations2[i], ts2[i])));

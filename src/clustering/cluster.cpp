@@ -54,7 +54,7 @@ bool Cluster::InitIGraph(const std::vector<std::pair<int, int>>& edges,
                          const std::vector<int>& weights) {
   // std::vector<int> nodes;
   std::unordered_map<int, int> node_mapper;
-  for (uint i = 0; i < edges.size(); i++) {
+  for (unsigned int i = 0; i < edges.size(); i++) {
     auto edge = edges[i];
     nodes_.push_back(edge.first);
     nodes_.push_back(edge.second);
@@ -64,12 +64,12 @@ bool Cluster::InitIGraph(const std::vector<std::pair<int, int>>& edges,
   nodes_.erase(std::unique(nodes_.begin(), nodes_.end()), nodes_.end());
 
   const int n = nodes_.size();
-  for (uint i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     node_mapper[nodes_[i]] = i;
   }
 
   // Filling edges in igraph data format.
-  for (uint i = 0; i < edges.size(); i++) {
+  for (unsigned int i = 0; i < edges.size(); i++) {
     auto edge = edges[i];
     igraph_vector_push_back(&i_edges_, node_mapper[edge.first]);
     igraph_vector_push_back(&i_edges_, node_mapper[edge.second]);

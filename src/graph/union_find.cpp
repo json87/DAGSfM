@@ -62,7 +62,7 @@ void UnionFind::InitWithNodes(const std::vector<size_t>& nodes) {
   nodes_mapper_.clear();
   nodes_mapper_.reserve(nodes.size());
 
-  for (uint i = 0; i < nodes.size(); i++) {
+  for (unsigned int i = 0; i < nodes.size(); i++) {
     nodes_mapper_[nodes[i]] = i;
   }
 }

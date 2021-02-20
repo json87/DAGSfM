@@ -446,7 +446,7 @@ void Graph<NodeType, EdgeType>::ShowInfo() const {
   LOG(INFO) << "Total nodes: " << std::to_string(GetNodesNum());
   LOG(INFO) << "\nTotal edges: " << std::to_string(GetEdgesNum());
   LOG(INFO) << "\n[Node]: \n";
-  for (uint i = 0; i < nodes.size(); i++) {
+  for (unsigned int i = 0; i < nodes.size(); i++) {
     std::cout << nodes[i].id << " ";
   }
   LOG(INFO) << "\n[Edge]: \n";
